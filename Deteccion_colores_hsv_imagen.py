@@ -2,7 +2,7 @@
 """
 Created on Sun May 16 21:05:31 2021
 
-@author: weexo
+@author: Luisriosca
 """
 
 import cv2
