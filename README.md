@@ -9,7 +9,7 @@ La mayoría de estas implementaciones son básicas para el uso en conjunto.
 
 * [Python 3](https://www.python.org/downloads/) - Un lenguaje programación muy sencillo pero muy poderoso.
 * [OpenCV](https://maven.apache.org/) - La librería para el manejo y procesamiento de imagenes y video más famosa del mundo (disponible para varios lenguajes). 
-* [Muchas ganas](https://twitter.com/Luis_riosca) - Echale ganas y sígueme en twitter. 
+* [Muchas ganas](https://twitter.com/Luis_riosca) - Sígueme en twitter. 
 
 ### Cargar Imagenes
 El primer código de esta sección contiene la estructura básica para poder cargar una imagen utilizando OpenCv y Python.
@@ -21,12 +21,36 @@ Este segundo código sirve para poder binarizar una imagen con la finalidad de u
 
 Para poder modificar el código y detectar otros colores se deben de modificar estas siguientes lineas:
 
-```
+
+```py
+#Deteccion_de_colores_camara/imagen
+
 vRojoBajo  = np.array([0, 100, 20], np.uint8)
 vRojoAlto  = np.array([30, 255, 255], np.uint8)
 v2RojoBajo = np.array([175, 100, 20], np.uint8)
 v2RojoAlto = np.array([179, 255, 255], np.uint8)
 
 ```
+Para detectar el color rojo se escriben dos rangos de valores para el tono de color, ya que el color rojo se encuentra al final y al principio de nuestra grafica de tonos, brillo y saturación, si deseas detectar un color diferente puedes comentar la tercera y cuarta linea de los umbrales:
 
+```py
+#Deteccion_de_colores_camara/imagen
 
+vBajo  = np.array([0, 100, 20], np.uint8)
+vAlto  = np.array([30, 255, 255], np.uint8)
+#v2RojoBajo = np.array([175, 100, 20], np.uint8)
+#v2RojoAlto = np.array([179, 255, 255], np.uint8)
+
+```
+y más abajo dentro del <b>while</b> también comentamos la variable mascara que fusiona las dos mascaras del color rojo.
+
+```py
+  mascaraRojo1 = cv2.inRange(frameHSV, vRojoBajo, vRojoAlto)
+  #mascaraRojo2 = cv2.inRange(frameHSV, v2RojoBajo, v2RojoAlto)
+  #mascara = cv2.add(mascaraRojo1,mascaraRojo2)
+```
+Una vez determinada la mascara se ocupa la función siguiente para poder generar un recorte de las zonas "enmascaradas".
+
+```py
+  mascaraRojaVis =  cv2.bitwise_and(imagen, imagen, mask = mascara)
+```
